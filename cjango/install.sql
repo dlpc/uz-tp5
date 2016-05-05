@@ -2,8 +2,8 @@
 -- c.Jango MySQL Data Transfer
 --
 -- Host     : 127.0.0.1
--- UserName : uz_monler
--- Database : uz_monler
+-- UserName : uz_tp5
+-- Database : uz_tp5
 --
 -- Part : #1
 -- Date : 2016-05-05 12:53:32
