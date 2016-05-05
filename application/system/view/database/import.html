@@ -1,0 +1,79 @@
+{extend name="public/base" /}
+
+{block name="body"}
+<table class="table m-t-10 table-striped table-hover">
+    <thead>
+        <tr>
+            <th width="200">备份名称</th>
+            <th width="60">卷数</th>
+            <th width="60">压缩</th>
+            <th width="100">数据大小</th>
+            <th width="140">备份时间</th>
+            <th width="100">状态</th>
+            <th></th>
+            <th width="80">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {volist name="__list__" id="vo"}
+        <tr>
+            <td>{$vo.time|date='Ymd-His',###}</td>
+            <td>{$vo.part}</td>
+            <td>{$vo.compress}</td>
+            <td>{$vo.size|byte_format}</td>
+            <td>{$key}</td>
+            <td class="status">-</td>
+            <td></td>
+            <td>
+                <a class="doimp" href="{:Url('system/database/import')}?time={$vo.time}">还原</a>&nbsp;
+                <a class="del" href="{:Url('system/database/del')}?time={$vo.time}">删除</a>
+            </td>
+        </tr>
+        {/volist}
+    </tbody>
+</table>
+{/block}
+
+{block name="script"}
+<script type="text/javascript">
+    $(".doimp").click(function(event) {
+        event.preventDefault();
+        var self = this, status = ".";
+        $.get(self.href, success, "json");
+        window.onbeforeunload = function() { return "正在还原数据库，请不要关闭！" }
+        return false;
+
+        function success(data) {
+            if (data.code) {
+                if (data.gz) {
+                    data.msg += status;
+                    if (status.length === 5) {
+                        status = ".";
+                    } else {
+                        status += ".";
+                    }
+                }
+                $(self).parent().siblings('.status').text(data.msg);
+                if (data.part) {
+                    $.get(self.href, {"part" : data.part, "start" : data.start}, success, "json");
+                } else {
+                    window.onbeforeunload = function() { return null; }
+                }
+            } else {
+                updateAlert(data.msg, 'warning');
+            }
+        }
+    });
+
+    $(".del").click(function(event) {
+        event.preventDefault();
+        var self = this, status = ".";
+        $.get(self.href, function(data) {
+            if (data.code) {
+                $(self).parent().parent().remove();
+            }
+            updateAlert(data.msg, 'success');
+        }, "json");
+    });
+</script>
+{/block}

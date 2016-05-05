@@ -1,0 +1,99 @@
+<form class="form-horizontal" method="post" action="__SELF__">
+    <div class="form-group">
+        <label class="col-md-3 control-label required">菜单名称</label>
+        <div class="col-md-7">
+            <input type="text" name="title" class="form-control" value="{$info.title|default=''}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">菜单图标</label>
+        <div class="col-md-3">
+            <input type="text" name="icon" class="form-control" value="{$info.icon|default=''}">
+        </div>
+        <div class="help-block">
+            <i id="iconPreview" class="f-20 icon icon-{$info.icon|default=''}"></i>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("input[name='icon']").keyup(function(event) {
+            $("#iconPreview").removeClass(function(index, css) {
+                return (css.match(/\bicon-\S+/g) || []).join(' ');
+            }).addClass('icon-' + $(this).val());
+        });
+    </script>
+    <div class="form-group">
+        <label class="col-md-3 control-label">排序</label>
+        <div class="col-md-2">
+            <input name="sort" value="{$info.sort|default=0}" class="form-control" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">上级菜单</label>
+        <div class="col-md-7">
+            <select name="pid" class="chosen-select form-control">
+                {volist name="up_menus" id="vo"}
+                <option {eq name="info.pid" value="$vo.id"}selected{/eq} value="{$vo.id}">{$vo.title_show}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">是否隐藏</label>
+        <div class="col-md-7">
+            <label class="radio-inline">
+                <input type="radio" name="hide" value="0" {eq name="info.hide|default=0" value="0"}checked{/eq}> 否
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="hide" value="1" {eq name="info.hide|default=0" value="1"}checked{/eq}> 是
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">DIVIDER边框</label>
+        <div class="col-md-7">
+            <label class="radio-inline">
+                <input type="radio" name="divider" value="0" {eq name="info.divider|default=0" value="0"}checked{/eq}> 无
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="divider" value="1" {eq name="info.divider|default=0" value="1"}checked{/eq}> 有
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">权限验证</label>
+        <div class="col-md-7">
+            <label class="radio-inline">
+                <input type="radio" name="auth" value="1" {eq name="info.auth|default=1" value="1"}checked{/eq}> 需要
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="auth" value="0" {eq name="info.auth|default=1" value="0"}checked{/eq}> 不需要
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">URL链接</label>
+        <div class="col-md-7">
+            <input type="text" name="url" class="form-control" value="{$info.url|default=''}">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-3 col-md-7">
+            {eq name="Think.ACTION_NAME" value="edit"}
+            <input type="hidden" name="id" value="{$info.id|default=''}">
+            {/eq}
+            <button type="button" data-loading="加载中,请稍候..." class="btn btn-primary ajax-post"><i class="icon icon-check"></i> 保存菜单</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+    </div>
+</form>
+<link rel="stylesheet" type="text/css" href="__CDN__/system/lib/chosen/chosen.min.css">
+<script type="text/javascript">
+    $.getScript('__CDN__/system/lib/chosen/chosen.min.js', function() {
+        $('.chosen-select').chosen({
+            no_results_text          : "未找到节点:",
+            placeholder_text         : "请选择...",
+            search_contains          : true,
+            disable_search_threshold : 5
+        });
+    });
+</script>

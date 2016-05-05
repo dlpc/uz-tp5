@@ -1,0 +1,100 @@
+{extend name="public/base" /}
+
+{block name="body"}
+<div class="col-lg-2 col-md-3 border-right">
+    <div class="border-bottom">
+        <h3>菜单地图</h3>
+    </div>
+    <ul id="tree" class="ztree"></ul>
+</div>
+<div class="col-lg-10 col-md-9">
+    <div class="page-actions clearfix">
+        <button type="button" class="btn btn-primary" data-remote="{:Url('system/menu/add')}?pid={$Think.get.pid|default=0}" data-toggle="modal" data-backdrop="static">
+            <i class="icon icon-plus"></i> 新增菜单
+        </button>
+        <a class="btn btn-primary" href="{:Url('system/menu/sort')}?pid={$Think.get.pid|default=0}">
+            <i class="icon icon-sort-by-order"></i> 快速排序
+        </a>
+        <form class="form-search" method="get" action="__SELF__">
+            <div class="input-group">
+                <input type="text" class="form-control" name="title" value="{$Think.get.title|default=''}" placeholder="请输菜单名称" />
+                <span class="input-group-btn">
+                    <button type="submit" data-loading="请稍候..." class="btn btn-primary">搜索</button>
+                </span>
+            </div>
+        </form>
+    </div>
+    <table class="table table-hover table-striped">
+        <thead>
+            <tr>
+                <th width="60">ID</th>
+                <th width="60">图标</th>
+                <th width="120">名称</th>
+                <th width="50">排序</th>
+                <th width="50">状态</th>
+                <th width="50">AUTH</th>
+                <th class="left">URL</th>
+                <th width="50">隐藏</th>
+                <th width="80">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {volist name="list" id="vo"}
+            <tr>
+                <td>{$vo.id}</td>
+                <td><i class="icon icon-{$vo.icon}"></i></td>
+                <td><a href="{:Url('system/menu/index')}?pid={$vo.id}">{$vo.title}</a></td>
+                <td>{$vo.sort}</td>
+                <td><a class="ajax-get" href="{:Url('system/menu/status')}?id={$vo.id}&status={:abs($vo['status']-1)}">{$vo.status|get_status_title}</a></td>
+                <td><a class="ajax-get" href="{:Url('system/menu/auth')}?id={$vo.id}&auth={:abs($vo['auth']-1)}">{$vo.auth|get_status_title='boolean_status'}</a></td>
+                <td class="left">{$vo.url}</td>
+                <td><a class="ajax-get" href="{:Url('system/menu/hide')}?id={$vo.id}&hide={:abs($vo['hide']-1)}">{$vo.hide|get_status_title='boolean_status'}</a></td>
+                <td>
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" data-toggle="dropdown">
+                            操作 <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);" data-remote="{:Url('system/menu/edit')}?id={$vo.id}" data-toggle="modal" data-backdrop="static">编辑</a></li>
+                            <li class="divider"></li>
+                            <li><a class="ajax-get confirm" href="{:Url('system/menu/del')}?id={$vo.id}">删除</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            {/volist}
+        </tbody>
+    </table>
+</div>
+{$_page}
+{/block}
+
+{block name="script"}
+<link rel="stylesheet" type="text/css" href="__CDN__/system/lib/ztree/ztree.css">
+<script src="__CDN__/system/lib/ztree/ztree.min.js" type="text/javascript"></script>
+<script>
+    var zTree;
+    var t = $("#tree");
+    var setting = {
+        view: {
+            dblClickExpand: true,
+            showLine: true,
+            showIcon: false,
+            selectedMulti: false
+        },
+        data: {
+            key: {
+                name: "title"
+            },
+            simpleData: {
+                enable: true,
+                idKey:  "id",
+                pIdKey: "pid",
+                rootPId: ""
+            }
+        }
+    };
+    var zNodes = {$nodes};
+    t = $.fn.zTree.init(t, setting, zNodes);
+</script>
+{/block}

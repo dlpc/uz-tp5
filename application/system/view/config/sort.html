@@ -1,0 +1,29 @@
+{extend name="public/base" /}
+
+{block name="body"}
+<form method="post" action="__SELF__">
+    <div class="boards">
+        <div data-id="board1" class="board panel">
+            <div class="panel-heading">
+                <strong>快速排序</strong>
+            </div>
+            <div class="panel-body">
+                <div class="board-list">
+                    {volist name="list" id="vo"}
+                    <div data-id="{$vo.id}" class="board-item">
+                        {$vo.title}<input type="hidden" name="sort[]" value="{$vo.id}">
+                    </div>
+                    {/volist}
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" data-loading="加载中,请稍候..." class="btn btn-primary ajax-post">保存排序</button>
+</form>
+{/block}
+
+{block name="script"}
+<script>
+    $('.boards').boards();
+</script>
+{/block}

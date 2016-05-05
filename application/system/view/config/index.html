@@ -1,0 +1,65 @@
+{extend name="public/base" /}
+
+{block name="body"}
+<ul class="nav nav-tabs" id="myTab">
+    {volist name="Think.config.config_group_list" id="group"}
+    <li class="{eq name="key" value="1"}active{/eq}">
+        <a data-toggle="tab" href="#tab{$key}">{$group}</a>
+    </li>
+    {/volist}
+</ul>
+<form method="post" class="form-horizontal" action="">
+    <div class="tab-content">
+        {volist name="Think.config.config_group_list" id="group" key="clvo"}
+        <div id="tab{$key}" class="tab-pane {eq name="key" value="1"}in active{/eq} m-t-20">
+            {volist name="list" id="config"}
+            {eq name="config.group" value="$clvo"}
+            <div class="form-group">
+                <label class="col-lg-1 col-md-2 col-sm-3 control-label">{$config.title}</label>
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    {switch name="config.type"}
+                    {case value="0"}
+                    <input type="text" class="form-control" name="config[{$config.name}]" value="{$config.value}">
+                    {/case}
+                    {case value="1"}
+                    <input type="text" class="form-control" name="config[{$config.name}]" value="{$config.value}">
+                    {/case}
+                    {case value="2"}
+                    <textarea class="form-control" rows="2" name="config[{$config.name}]">{$config.value}</textarea>
+                    {/case}
+                    {case value="3"}
+                    <textarea class="form-control" name="config[{$config.name}]">{$config.value}</textarea>
+                    {/case}
+                    {case value="4"}
+                    <select name="config[{$config.name}]" class="form-control chosen-select">
+                        {volist name="config.extra|parse_config_enum" id="enum"}
+                        <option value="{$key}" {eq name="config.value" value="$key"}selected{/eq}>{$enum}</option>
+                        {/volist}
+                    </select>
+                    {/case}
+                    {/switch}
+                </div>
+            </div>
+            {/eq}
+            {/volist}
+        </div>
+        {/volist}
+    </div>
+    <div class="form-group">
+        <div class="col-lg-offset-1 col-md-offset-2 col-sm-offset-3 col-md-7">
+            <button type="button" data-loading="加载中,请稍候..." class="btn btn-primary ajax-post no-refresh"><i class="icon icon-check"></i> 保存配置</button>
+        </div>
+    </div>
+</form>
+{/block}
+
+{block name="script"}
+<link rel="stylesheet" type="text/css" href="__CDN__/system/lib/chosen/chosen.min.css">
+<script type="text/javascript">
+    $.getScript('__CDN__/system/lib/chosen/chosen.min.js', function() {
+        $('.chosen-select').chosen({
+            disable_search_threshold: 10
+        });
+    });
+</script>
+{/block}

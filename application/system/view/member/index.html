@@ -1,0 +1,64 @@
+{extend name="public/base" /}
+
+{block name="body"}
+<div class="page-actions clearfix">
+    <button type="button" class="btn btn-primary" data-remote="{:Url('system/member/add')}" data-toggle="modal" data-backdrop="static">
+        <i class="icon icon-plus"></i> 增加用户
+    </button>
+    <form class="form-search" method="get" action="__SELF__">
+        <div class="input-group">
+            <input type="text" class="form-control" name="title" value="{$Think.get.title|default=''}" placeholder="请输用户名/昵称" >
+            <span class="input-group-btn">
+                <button type="submit" data-loading="请稍候..." class="btn btn-primary">搜索</button>
+            </span>
+        </div>
+    </form>
+</div>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th width="50">UID</th>
+            <th width="100">用户名</th>
+            <th width="100">昵称</th>
+            <th width="50">性别</th>
+            <th width="100">生日</th>
+            <th width="50">登录</th>
+            <th width="50">状态</th>
+            <th></th>
+            <th width="120">注册时间</th>
+            <th width="120">最后登录</th>
+            <th width="120">最后登录IP</th>
+            <th width="80">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {volist name="list" id="vo"}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.account}</td>
+            <td>{$vo.nickname}</td>
+            <td>{$vo.sex|get_status_title='sex'}</td>
+            <td>{$vo.birthday}</td>
+            <td>{$vo.login}</td>
+            <td><a class="ajax-get" href="{:Url('system/member/status')}?id={$vo.id}&status={:abs($vo['status']-1)}">{$vo.status|get_status_title}</a></td>
+            <td></td>
+            <td>{$vo.create_time|time_format}</td>
+            <td>{$vo.last_time|time_format}</td>
+            <td>{$vo.last_ip}</td>
+            <td>
+                <div class="dropdown">
+                    <a href="javascript:void(0);" data-toggle="dropdown">
+                        操作 <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="javascript:void(0);" data-title="编辑配置" data-width="400" data-remote="{:Url('system/member/password')}?uid={$vo.id}" data-toggle="modal" data-backdrop="static">重置密码</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        {/volist}
+    </tbody>
+</table>
+{$_page}
+{/block}

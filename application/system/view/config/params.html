@@ -1,0 +1,75 @@
+{extend name="public/base" /}
+
+{block name="body"}
+<div class="page-actions clearfix">
+    <button type="button" class="btn btn-primary" data-remote="{:Url('config/add')}?group={$Think.get.group|default=0}" data-toggle="modal" data-backdrop="static">
+        <i class="icon icon-plus"></i> 增加配置
+    </button>
+    <a class="btn btn-primary" href="{:Url('config/sort')}?group={$Think.get.group|default=0}">
+        <i class="icon icon-sort-by-order"></i> 快速排序
+    </a>
+    <div class="btn-group">
+        <a class="btn btn-sm {eq name="Think.get.group|default=0" value="0"}active{/eq}" href="{:Url('config/params')}?group=0">全部</a>
+        {volist name="Think.config.config_group_list" id="vo"}
+        <a class="btn btn-sm {eq name="Think.get.group|default=0" value="$key"}active{/eq}" href="{:Url('config/params')}?group={$key}">{$vo}</a>
+        {/volist}
+        <a class="btn btn-sm btn-success ajax-get no-refresh" href="{:Url('config/clear')}">清除缓存</a>
+    </div>
+    <form class="form-search" method="get" action="__SELF__">
+        <div class="input-group">
+            <input type="text" class="form-control" name="title" value="{$Think.get.title|default=''}" placeholder="请输参数名称/标题" >
+            <span class="input-group-btn">
+                <button type="submit" data-loading="请稍候..." class="btn btn-primary">搜索</button>
+            </span>
+        </div>
+    </form>
+</div>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th width="50">编号</th>
+            <th width="200">参数名称</th>
+            <th width="200">配置标题</th>
+            <th width="60">类型</th>
+            <th width="60">分组</th>
+            <th width="50">排序</th>
+            <th width="50">状态</th>
+            <th width="50">锁定</th>
+            <th>配置内容</th>
+            <th width="120">创建时间</th>
+            <th width="120">更新时间</th>
+            <th width="80">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {volist name="list" id="vo"}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.name}</td>
+            <td>{$vo.title}</td>
+            <td>{$vo.type|get_status_title='config_type_list'}</td>
+            <td>{$vo.group|get_status_title='config_group_list'}</td>
+            <td>{$vo.sort}</td>
+            <td><a class="ajax-get" href="{:Url('system/config/status')}?id={$vo.id}&status={:abs($vo['status']-1)}">{$vo.status|get_status_title}</a></td>
+            <td>{$vo.locked|get_status_title='boolean_status'}</td>
+            <td>{$vo.value|pre_echo}</td>
+            <td>{$vo.create_time|time_format}</td>
+            <td>{$vo.update_time|time_format}</td>
+            <td>
+                <div class="dropdown">
+                    <a href="javascript:void(0);" data-toggle="dropdown">
+                        操作 <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="javascript:void(0);" data-title="编辑配置" data-remote="{:Url('config/edit')}?id={$vo.id}" data-toggle="modal" data-backdrop="static">编辑</a></li>
+                        <li class="divider"></li>
+                        <li><a class="ajax-get confirm" href="{:Url('config/del')}?id={$vo.id}">删除</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        {/volist}
+    </tbody>
+</table>
+{/block}

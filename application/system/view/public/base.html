@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{$meta_title|default=''} [{$Think.config.web_site_title}]</title>
+    <link rel="stylesheet" type="text/css" href="__CDN__/system/css/zui.min.css">
+    <link rel="stylesheet" type="text/css" href="__CDN__/system/css/zui-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="__CDN__/system/css/base.css">
+    {block name="style"}{/block}
+    <script type="text/javascript" src="__CDN__/system/lib/jquery/jquery.js"></script>
+    <script type="text/javascript" src="__CDN__/system/js/zui.min.js"></script>
+    {block name="js"}{/block}
+</head>
+<body>
+    <header>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-header">
+                <img src="__CDN__/system/img/logo.png" alt="">
+            </div>
+            <nav class="collapse navbar-collapse zui-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">后台首页</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle avatar" href="#">
+                            <i class="icon icon-chat"></i>
+                            {gt name="unreadMessage|default=0" value="0"}
+                            <span class="label label-dot label-info"></span>
+                            {/gt}
+                            <b class="caret"></b>
+                        </a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a href="{:url('system/profile/message')}">系统通知</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle avatar" href="#"><i class="icon icon-user"></i> {:get_nickname(UID)} <b class="caret"></b></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a>{:get_username(UID)}</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{:url('system/profile/index')}">修改资料</a></li>
+                            <li><a data-remote="{:url('system/profile/password')}" data-width="400" data-toggle="modal" data-backdrop="static">修改密码</a></li>
+                            <li class="divider"></li>
+                            <li><a class="ajax-get" href="{:url('system/login/logout')}">退出登陆</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- LEFT MENU START -->
+    {notempty name="_MENU_.MAIN_MENU"}
+    <div id="context-menu">
+        <div class="tomin" title="展开/收缩">
+            <i class="icon icon-resize"></i>
+        </div>
+        {volist name="_MENU_.MAIN_MENU" id="vo"}
+        {eq name="vo.divider" value="1"}
+        <span class="divider"></span>
+        {/eq}
+        <a class="item {$vo.class|default=''}" href="{:url('system/' . $vo['url'])}" data-toggle="tooltip" title="{$vo.title}">
+            <i class="icon icon-{$vo.icon}"></i>
+            <span>{$vo.title}</span>
+        </a>
+        {/volist}
+    </div>
+    {/notempty}
+    <!-- LEFT MENU END -->
+
+    <!-- INNER MENU START -->
+    {notempty name="_MENU_.SUB_MENU"}
+    <div id="inner-menu" class="fixed">
+        <h2>{$_MENU_.SUB_TITLE}</h2>
+        {volist name="_MENU_.SUB_MENU" id="vo"}
+        {eq name="vo.divider|default=''" value="1"}
+        <span class="divider"></span>
+        {/eq}
+        <a class="item {$vo.class|default=''}" href="{:url('system/' . $vo['url'])}">
+            <i class="icon icon-{$vo.icon|default=''}"></i> {$vo.title}
+        </a>
+        {/volist}
+    </div>
+    {/notempty}
+    <!-- INNER MENU END -->
+
+    <section class="container" id="pjax">
+        {block name="body"}{/block}
+    </section>
+    <script type="text/javascript" src="__CDN__/system/js/cjango.js"></script>
+    {block name="script"}{/block}
+</body>
+</html>

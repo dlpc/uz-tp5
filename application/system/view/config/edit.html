@@ -1,0 +1,78 @@
+<form class="form-horizontal" method="post" action="__SELF__">
+    <div class="form-group">
+        <label class="col-md-3 control-label required">配置名称</label>
+        <div class="col-md-7">
+            <input type="text" name="title" class="form-control" value="{$info.title|default=''}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label required">配置标识</label>
+        <div class="col-md-7">
+            <input type="text" name="name" class="form-control" value="{$info.name|default=''}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">排序</label>
+        <div class="col-md-3">
+            <input type="text" name="sort" class="form-control" value="{$info.sort|default=0}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label required">配置类型</label>
+        <div class="col-md-7">
+            <select name="type" class="chosen-select form-control">
+                {volist name="Think.config.CONFIG_TYPE_LIST" id="type"}
+                <option {eq name="info.type|default=''" value="$key"}selected{/eq} value="{$key}">{$type}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label required">配置分组</label>
+        <div class="col-md-7">
+            <select name="group" data-placeholder="不分组" class="chosen-select form-control">
+                {volist name="Think.config.CONFIG_GROUP_LIST" id="group"}
+                <option {eq name="info.group|default=''" value="$key"}selected{/eq} value="{$key}">{$group}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label required">配置值</label>
+        <div class="col-md-7">
+            <textarea name="value" class="form-control">{$info.value|default=''}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">配置项</label>
+        <div class="col-md-7">
+            <textarea name="extra" class="form-control">{$info.extra|default=''}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-3 control-label">配置说明</label>
+        <div class="col-md-7">
+            <textarea name="remark" class="form-control">{$info.remark|default=''}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-3 col-md-7">
+            {eq name="Think.ACTION_NAME" value="edit"}
+            <input type="hidden" name="id" value="{$info.id|default=''}" />
+            {/eq}
+            <button type="button" data-loading="加载中,请稍候..." class="btn btn-primary ajax-post"><i class="icon icon-check"></i> 保存配置</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+    </div>
+</form>
+<link rel="stylesheet" type="text/css" href="__CDN__/system/lib/chosen/chosen.min.css">
+<script type="text/javascript">
+    $.getScript('__CDN__/system/lib/chosen/chosen.min.js', function() {
+        $('.chosen-select').chosen({
+            no_results_text          : "未找到节点:",
+            placeholder_text         : "请选择...",
+            search_contains          : true,
+            disable_search_threshold : 5
+        });
+    });
+</script>
