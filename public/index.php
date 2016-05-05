@@ -10,7 +10,7 @@
  * [ 应用入口文件 ]
  */
 
-define('ROOT_DOMAIN', '.monler.cn');
+define('ROOT_DOMAIN', '.uztech.com');
 /**
  * 系统版本
  */

@@ -1,0 +1,116 @@
+a:hover{text-decoration:none;cursor:pointer;}
+/*文字辅助*/
+.text-left {text-align: left}
+.text-right {text-align: right;}
+.text-center {text-align: center;}
+.text-delete {text-decoration: line-through;}
+/*边距与内补丁*/
+.m-10 {margin: 10px;}
+.m-20 {margin: 20px;}
+.m-t-10 {margin-top: 10px;}
+.m-t-20 {margin-top: 20px;}
+.m-b-10 {margin-bottom: 10px;}
+.m-b-20 {margin-bottom: 20px;}
+.m-l-10 {margin-left: 10px;}
+.m-l-20 {margin-left: 20px;}
+.m-r-10 {margin-right: 10px;}
+.m-r-20 {margin-right: 20px;}
+.p-10 {padding: 10px;}
+.p-20 {padding: 20px;}
+.p-t-10 {padding-top: 10px;}
+.p-t-20 {padding-top: 20px;}
+.p-b-10 {padding-bottom: 10px;}
+.p-b-20 {padding-bottom: 20px;}
+.p-l-10 {padding-left: 10px;}
+.p-l-20 {padding-left: 20px;}
+.p-r-10 {padding-right: 10px;}
+.p-r-20 {padding-right: 20px;}
+.border-bottom {border-bottom: 1px solid #ddd}
+.border-right {border-right: 1px solid #ddd}
+.border-left {border-left: 1px solid #ddd}
+.border-top {border-top: 1px solid #ddd}
+/*有通用的样式,可以继续扩展*/
+
+/*登陆页面*/
+.login {background: url(../img/background.jpg) no-repeat;background-size:cover}
+.login .form-horizontal {width: 400px;margin: 10% auto 0;}
+.login .panel-heading {font-weight: bold;}
+.login .panel-body {padding-top: 30px;}
+.login .panel-footer div {line-height: 32px;}
+.login .verify {cursor: pointer;border: 1px solid #ddd;}
+
+/*内部页面*/
+header .navbar{background:#0099cc;box-shadow:0 0 0 1px rgba(0, 0, 0, 0.1);height:45px;margin-bottom:0;}
+header .navbar{background:#2f3b53;padding-right:15px}
+header .navbar-brand{color:#fff;font-size:24px;height:45px;line-height:45px;overflow:hidden;padding:0;text-align:center;transition:none 0s ease 0s}
+header .navbar-brand img{max-width:100%;}
+header .navbar-brand:hover{color:#eee;transition:color 0.5s ease 0s;}
+header .nav .open > a, .nav .open > a:hover, .nav .open > a:focus{background:#4c4c4c;color:#fff;border-bottom:2px solid #ff8839;}
+header .nav > li > a{color:#fff;padding-top:13px;}
+header .nav > li > a:hover{background:#4c4c4c;color:#eee;border-bottom:2px solid #ff8839;}
+header .nav .caret{border-bottom-color:#fff;border-top-color:#fff;}
+header .navbar-nav > li{border-right: 1px solid #666;}
+header .navbar-nav > li:last-child{border-right: 0}
+header .navbar-nav span.label{position:absolute;right:8px;top:8px;border-radius:100%;}
+
+#context-menu{background:#293038;color:#fff;height:100%;top:45px;width:160px;position: fixed;}
+#context-menu a.item{color:#eee;display:inline-block;overflow:hidden;padding:10px 0 9px 8px;width:100%;}
+#context-menu a.item:hover{background:#37424f;}
+#context-menu .item i{color:#aeb9c2;font-size:17px;margin-left:6px;}
+#context-menu a.item span{font-size:13px;margin-left:10px;overflow:hidden;}
+#context-menu .divider{display:block;height:20px;}
+#context-menu .actives, #context-menu a.actives:hover{background:#0099cc;}
+#context-menu .tomin{background:#394555;color:#aeb9c2;cursor:pointer;font-size:12px;line-height:26px;text-align:center;}
+#context-menu i{width:16px;height:16px;display:inline-block;}
+#context-menu.min {width: 45px}
+#context-menu.min a.item span {display: none;}
+
+#inner-menu{background:#eaedf1;height:100%;overflow-y:auto;top:45px;width:180px;}
+#inner-menu h2{font-size:14px;margin-top:0px;padding:31px 25px 20px;background:#D9DEE4}
+#inner-menu a{color:#333;display:block;padding:10px 25px 8px;text-overflow:ellipsis;white-space:nowrap;}
+#inner-menu a .icon{display:inline-block;text-align:center;width:20px;}
+#inner-menu a:hover{background:#f2f1ed;}
+#inner-menu a.active{background:#fff;}
+#inner-menu .divider{background:#ccc;display:block;height:1px;visibility:visible;width:100%;margin: 10px 0;}
+#context-menu a.active,#context-menu a.active:hover,#context-menu a.active i {background:#2a95dd;color:#fff}
+.container{margin:45px  0 0 80px;max-width:100%;padding:10px 10px 40px;position:relative;}
+#context-menu ~ .container{margin-left:160px;}
+#context-menu.min ~ .container{margin-left:45px;}
+#context-menu ~ #inner-menu{margin-left:160px;}
+#context-menu.min ~ #inner-menu{margin-left:45px;}
+#inner-menu ~ .container{margin:60px 0 0 340px;max-width:100%;}
+#context-menu.min ~ #inner-menu ~ .container{margin-left:225px;}
+.copyright{bottom:0;color:#999;height:30px;line-height:30px;position:fixed;text-align:center;width:100%;}
+.messager.top-right{border-radius:3px;top:50px;right:4px;}
+.messager{width:20%;}
+.fixed{position:fixed;}
+.block{display:block;}
+.bg-white{background:#fff;}
+.border{border:1px solid #ddd;}
+
+.page-actions {margin-bottom: 10px;}
+.page-actions .form-search {float: right;max-width: 300px;}
+
+/*表格部分*/
+.table{border:1px solid #ddd;margin-bottom:10px;}
+.table > thead > tr > th{border-top:1px solid #c1dce9;border-bottom:1px solid #c1dce9;background:#e6f1f6;}
+.table td{color:#666;background:#fff;}
+th.left, td.left{text-align:left;}
+th.right, td.right{text-align:right;}
+td .dropdown-menu{min-width:160px;text-align:left;}
+.table ~ .pager{float:right;margin-top:0;}
+/*重写tab*/
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {border-top-color:#2A95DD}
+.nav-tabs > li > a {margin-right: -1px;border: 1px solid #DDDDDD;background: #F9F9F9;padding: 8px 20px;}
+
+.show-message {width: 300px;height: 200px;position: fixed;bottom: -300px;right: 0;margin: 0;}
+
+@media screen and (max-width: 1170px) { /*当屏幕尺寸小于600px时，应用下面的CSS样式*/
+    #context-menu{width:45px;}
+    #context-menu .tomin {display: none;}
+    #inner-menu{width:140px;}
+    #context-menu a.item span{display: none;}
+    #context-menu ~ #inner-menu{margin-left:45px;}
+    #context-menu ~ .container{margin-left:45px;}
+    #inner-menu ~ .container{margin:60px 0 0 185px;max-width:100%;}
+}
